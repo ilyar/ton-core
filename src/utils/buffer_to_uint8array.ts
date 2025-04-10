@@ -3,9 +3,12 @@ export function utf8StringToUint8Array(str: string): Uint8Array {
     return encoder.encode(str);
 }
 
+export function normalizeBase64(base64: string): string {
+    return base64.replace(/_/g, '/').replace(/-/g, '+')
+}
+
 export function base64ToUint8Array(base64: string): Uint8Array {
-    const encoder = new TextEncoder();
-    const binaryString = atob(base64);
+    const binaryString = atob(normalizeBase64(base64));
     const len = binaryString.length;
     const bytes = new Uint8Array(len);
     for (let i = 0; i < len; i++) {
